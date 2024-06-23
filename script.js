@@ -25,7 +25,7 @@ function GameBoard() {
       row.map((square) => square.getSymbol())
     );
 
-    console.log(boardWithSymbolValues);
+    console.table(boardWithSymbolValues);
   };
 
   return { getBoard, selectSquare, printBoard };
@@ -125,9 +125,22 @@ function GameController(
     }
   };
 
+  const printWinner = (winner) => {
+    console.log(`The winner is: ${winner.name}`);
+  };
+
   const playRound = (row, column) => {
     board.selectSquare(row, column, getActivePlayer().symbol);
 
+    const winner = checkWinner();
+
+    if (winner !== undefined) {
+      printNewRound();
+      printWinner(winner);
+      return;
+    }
+
+    round++;
     switchPlayerTurn();
     printNewRound();
   };
