@@ -77,6 +77,54 @@ function GameController(
     console.log(`${getActivePlayer().name}'s turn.`);
   };
 
+  let round = 1;
+
+  const checkWinner = () => {
+    if (round < 5) {
+      return;
+    }
+
+    const playerSymbol = getActivePlayer().symbol;
+    const currentBoard = board.getBoard();
+    const rowColumnLength = currentBoard.length;
+
+    // Check each row if there is a winner and return the winner
+    for (let i = 0; i < rowColumnLength; i++) {
+      for (let j = 0; j < rowColumnLength; j++) {
+        if (currentBoard[i][j].getSymbol() !== playerSymbol) {
+          break;
+        }
+        return getActivePlayer();
+      }
+    }
+
+    // Check each column if there is a winner and return the winner
+    for (let i = 0; i < rowColumnLength; i++) {
+      for (let j = 0; j < rowColumnLength; j++) {
+        if (currentBoard[j][i].getSymbol() !== playerSymbol) {
+          break;
+        }
+        return getActivePlayer();
+      }
+    }
+
+    // Check diagonals if there is a winner and return the winner
+    for (let i = 0; i < rowColumnLength; i++) {
+      if (currentBoard[i][i].getSymbol() !== playerSymbol) {
+        break;
+      }
+      return getActivePlayer();
+    }
+    for (let i = 0; i < rowColumnLength; i++) {
+      if (
+        currentBoard[i][rowColumnLength - 1 - i].getSymbol() !== playerSymbol
+      ) {
+        break;
+      }
+      return getActivePlayer();
+    }
+  };
+
   const playRound = (row, column) => {
     board.selectSquare(row, column, getActivePlayer().symbol);
 
