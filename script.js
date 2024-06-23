@@ -42,3 +42,51 @@ function Player() {
 
   return { addSymbol, getSymbol };
 }
+
+function GameController(
+  playerOneName = "Player One",
+  playerTwoName = "Player Two"
+) {
+  const board = GameBoard();
+
+  const players = [
+    {
+      name: playerOneName,
+      symbol: "X",
+    },
+    {
+      name: playerTwoName,
+      symbol: "O",
+    },
+  ];
+
+  let activePlayer = players[0];
+
+  const switchPlayerTurn = () => {
+    if (activePlayer === players[0]) {
+      activePlayer = players[1];
+    } else {
+      activePlayer = players[0];
+    }
+  };
+
+  const getActivePlayer = () => activePlayer;
+
+  const printNewRound = () => {
+    board.printBoard();
+    console.log(`${getActivePlayer().name}'s turn.`);
+  };
+
+  const playRound = (row, column) => {
+    board.selectSquare(row, column, getActivePlayer().symbol);
+
+    switchPlayerTurn();
+    printNewRound();
+  };
+
+  printNewRound();
+
+  return { playRound };
+}
+
+const game = GameController();
