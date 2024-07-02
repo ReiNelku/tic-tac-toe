@@ -90,38 +90,53 @@ function GameController(
 
     // Check each row if there is a winner and return the winner
     for (let i = 0; i < rowColumnLength; i++) {
+      let symbolCount = 0;
       for (let j = 0; j < rowColumnLength; j++) {
-        if (currentBoard[i][j].getSymbol() !== playerSymbol) {
-          break;
+        if (currentBoard[i][j].getSymbol() === playerSymbol) {
+          symbolCount++;
         }
+      }
+      if (symbolCount === rowColumnLength) {
         return getActivePlayer();
       }
     }
 
     // Check each column if there is a winner and return the winner
     for (let i = 0; i < rowColumnLength; i++) {
+      let symbolCount = 0;
       for (let j = 0; j < rowColumnLength; j++) {
-        if (currentBoard[j][i].getSymbol() !== playerSymbol) {
-          break;
+        if (currentBoard[j][i].getSymbol() === playerSymbol) {
+          symbolCount++;
         }
+      }
+      if (symbolCount === rowColumnLength) {
         return getActivePlayer();
       }
     }
 
     // Check diagonals if there is a winner and return the winner
-    for (let i = 0; i < rowColumnLength; i++) {
-      if (currentBoard[i][i].getSymbol() !== playerSymbol) {
-        break;
+    for (let i = 0, symbolCount = 0; i < rowColumnLength; i++) {
+      if (currentBoard[i][i].getSymbol() === playerSymbol) {
+        symbolCount++;
       }
-      return getActivePlayer();
+      if (symbolCount === rowColumnLength) {
+        return getActivePlayer();
+      }
     }
-    for (let i = 0; i < rowColumnLength; i++) {
+    for (let i = 0, symbolCount = 0; i < rowColumnLength; i++) {
       if (
-        currentBoard[i][rowColumnLength - 1 - i].getSymbol() !== playerSymbol
+        currentBoard[i][rowColumnLength - 1 - i].getSymbol() === playerSymbol
       ) {
-        break;
+        symbolCount++;
       }
-      return getActivePlayer();
+      if (symbolCount === rowColumnLength) {
+        return getActivePlayer();
+      }
+    }
+
+    // Check if the board is full and return null if it is a tie
+    if (round === 9) {
+      return null;
     }
   };
 
