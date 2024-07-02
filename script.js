@@ -144,12 +144,19 @@ function GameController(
     console.log(`The winner is: ${winner.name}`);
   };
 
+  const printTie = () => {
+    console.log("This game is a Tie!");
+  };
+
   const playRound = (row, column) => {
     board.selectSquare(row, column, getActivePlayer().symbol);
 
     const winner = checkWinner();
 
-    if (winner !== undefined) {
+    if (winner === null) {
+      printTie();
+      return;
+    } else if (winner !== undefined) {
       printNewRound();
       printWinner(winner);
       return;
