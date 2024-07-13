@@ -1,0 +1,43 @@
+@font-face {
+  font-family: "Playwrite Cuba";
+  src: url("./Fonts/PlaywriteCU-Regular.ttf");
+}
+:root {
+  --background-color: #fffffe;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-size: 12px;
+}
+
+body {
+  min-height: 100%;
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  align-self: center;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title h1 {
+  font-family: "Playwrite Cuba";
+  font-size: 3rem;
+}
+
+.title img {
+  height: 5rem;
+  width: 5rem;
+}
