@@ -4,6 +4,8 @@
 }
 :root {
   --background-color: #fffffe;
+  --x: #3da9fc;
+  --o: #ef4565;
 }
 
 * {
@@ -40,4 +42,41 @@ header {
 .title img {
   height: 5rem;
   width: 5rem;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+.players {
+  margin: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 25rem;
+}
+
+.player {
+  padding: 2rem;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.x {
+  color: var(--x);
+  border: 1px dashed var(--x);
+}
+
+.o {
+  color: var(--o);
+  border: 1px dashed var(--o);
+}
+
+.player.x {
+  justify-self: end;
+}
+
+.player.o {
+  justify-self: start;
 }
