@@ -13,7 +13,7 @@ function GameBoard() {
   const getBoard = () => board;
 
   const selectSquare = (row, column, player) => {
-    if (board[row][column].getSymbol() !== "Empty") {
+    if (board[row][column].getSymbol() !== null) {
       return;
     }
 
@@ -32,7 +32,7 @@ function GameBoard() {
 }
 
 function Player() {
-  let symbol = "Empty";
+  let symbol = null;
 
   const addSymbol = (player) => {
     symbol = player;
@@ -169,7 +169,65 @@ function GameController(
 
   printNewRound();
 
-  return { playRound };
+  return { playRound, getActivePlayer, getBoard: board.getBoard };
 }
 
-const game = GameController();
+(function ScreenController() {
+  const game = GameController();
+  const playerXNameBox = document.querySelector(".player.x");
+  const playerONameBox = document.querySelector(".player.o");
+  const boardDiv = document.querySelector(".board");
+
+  const updateScreen = () => {
+    boardDiv.textContent = "";
+
+    const board = game.getBoard();
+    const activePlayer = game.getActivePlayer();
+
+    switch (activePlayer.symbol) {
+      case "X":
+        playerONameBox.classList.remove("active");
+        playerXNameBox.classList.add("active");
+        break;
+      case "O":
+        playerXNameBox.classList.remove("active");
+        playerONameBox.classList.add("active");
+        break;
+    }
+
+    board.forEach((row, rowIndex) => {
+      row.forEach((cell, colIndex) => {
+        const cellButton = document.createElement("button");
+        cellButton.classList.add("cell");
+
+        cellButton.dataset.row = rowIndex;
+        cellButton.dataset.column = colIndex;
+        cellButton.textContent = cell.getSymbol();
+        switch (cell.getSymbol()) {
+          case "X":
+            cellButton.classList.add("x");
+            cellButton.disabled = true;
+            break;
+          case "O":
+            cellButton.classList.add("o");
+            cellButton.disabled = true;
+            break;
+        }
+        boardDiv.appendChild(cellButton);
+      });
+    });
+  };
+
+  function clickHandlerBoard(e) {
+    const selectedRow = e.target.dataset.row;
+    const selectedColumn = e.target.dataset.column;
+
+    if (!selectedRow || !selectedColumn) return;
+
+    game.playRound(selectedRow, selectedColumn);
+    updateScreen();
+  }
+  boardDiv.addEventListener("click", clickHandlerBoard);
+
+  updateScreen();
+})();

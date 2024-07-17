@@ -75,9 +75,19 @@ main {
   border: 1px dashed var(--x);
 }
 
+.player.x.active {
+  color: var(--background-color);
+  background-color: var(--x);
+}
+
 .player.o {
   justify-self: start;
   border: 1px dashed var(--o);
+}
+
+.player.o.active {
+  color: var(--background-color);
+  background-color: var(--o);
 }
 
 .board {
