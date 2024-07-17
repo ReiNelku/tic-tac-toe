@@ -178,6 +178,8 @@ function GameController(
   const playerONameBox = document.querySelector(".player.o");
   const boardDiv = document.querySelector(".board");
 
+  const xSymbol = "✕";
+  const oSymbol = "◯";
   const updateScreen = () => {
     boardDiv.textContent = "";
 
@@ -202,13 +204,14 @@ function GameController(
 
         cellButton.dataset.row = rowIndex;
         cellButton.dataset.column = colIndex;
-        cellButton.textContent = cell.getSymbol();
         switch (cell.getSymbol()) {
           case "X":
+            cellButton.textContent = xSymbol;
             cellButton.classList.add("x");
             cellButton.disabled = true;
             break;
           case "O":
+            cellButton.textContent = oSymbol;
             cellButton.classList.add("o");
             cellButton.disabled = true;
             break;
