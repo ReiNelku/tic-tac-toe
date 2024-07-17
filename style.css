@@ -6,6 +6,7 @@
   --background-color: #fffffe;
   --x: #3da9fc;
   --o: #ef4565;
+  --board-border-color: #094067;
 }
 
 * {
@@ -15,12 +16,10 @@
 }
 
 html {
-  height: 100%;
   font-size: 12px;
 }
 
 body {
-  min-height: 100%;
   background-color: var(--background-color);
   display: flex;
   flex-direction: column;
@@ -65,18 +64,38 @@ main {
 
 .x {
   color: var(--x);
-  border: 1px dashed var(--x);
 }
 
 .o {
   color: var(--o);
-  border: 1px dashed var(--o);
 }
 
 .player.x {
   justify-self: end;
+  border: 1px dashed var(--x);
 }
 
 .player.o {
   justify-self: start;
+  border: 1px dashed var(--o);
+}
+
+.board {
+  align-self: center;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  grid-template-rows: repeat(3, minmax(150px, 1fr));
+  margin: 2rem;
+  border: 2px solid var(--board-border-color);
+}
+
+.cell {
+  font-size: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Courier New", Courier, monospace;
+  border: 3px solid var(--board-border-color);
+  background-color: var(--background-color);
+  cursor: pointer;
 }
