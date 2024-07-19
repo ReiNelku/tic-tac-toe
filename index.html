@@ -8,6 +8,21 @@
     <title>Tic-Tac-Toe</title>
   </head>
   <body>
+    <dialog class="start-game">
+      <form>
+        <div class="player-names">
+          <div class="player-name x">
+            <label for="x-name">Player ✕'s name</label>
+            <input type="text" name="x-name" id="x-name" autofocus required />
+          </div>
+          <div class="player-name o">
+            <label for="o-name">Player ◯'s name</label>
+            <input type="text" name="o-name" id="o-name" required />
+          </div>
+        </div>
+        <button class="start-game-btn" value="submit">Start Game</button>
+      </form>
+    </dialog>
     <header class="title">
       <img src="./Icons/Tic-Tac-Toe.png" alt="A tic-tac-toe icon" />
       <h1>Tic-Tac-Toe</h1>
@@ -17,8 +32,7 @@
         <div class="player x"><h2>✕: Player 1</h2></div>
         <div class="player o"><h2>◯: Player 2</h2></div>
       </div>
-      <div class="board">
-      </div>
+      <div class="board"></div>
     </main>
   </body>
 </html>

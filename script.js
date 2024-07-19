@@ -173,14 +173,64 @@ function GameController(
 }
 
 (function ScreenController() {
-  const game = GameController();
+  const showGameStartModal = () => {
+    const gameStartModal = document.querySelector(".start-game");
+    gameStartModal.showModal();
+
+    return gameStartModal;
+  };
+
+  const names = [];
+  let game = null;
+
+  const showPlayerNames = () => {
+    const playerXNameBox = document.querySelector(".player.x h2");
+    const playerONameBox = document.querySelector(".player.o h2");
+
+    if (names[0]) {
+      playerXNameBox.textContent = `✕: ${names[0]}`;
+    }
+    if (names[1]) {
+      playerONameBox.textContent = `◯: ${names[1]}`;
+    }
+  };
+
+  const startGame = () => {
+    game = GameController(...names);
+
+    showPlayerNames();
+    updateScreen();
+  };
+
+  const getPlayerNames = () => {
+    const modal = showGameStartModal();
+
+    const startGameBtn = document.querySelector(".start-game-btn");
+
+    function clickHandlerGameStart(e) {
+      e.preventDefault();
+
+      const playerXName = document.querySelector("#x-name");
+      const playerOName = document.querySelector("#o-name");
+
+      names[0] = playerXName.value;
+      names[1] = playerOName.value;
+
+      modal.close();
+      startGame();
+    }
+    startGameBtn.addEventListener("click", clickHandlerGameStart);
+  };
+
+  getPlayerNames();
   const playerXNameBox = document.querySelector(".player.x");
   const playerONameBox = document.querySelector(".player.o");
   const boardDiv = document.querySelector(".board");
 
   const xSymbol = "✕";
   const oSymbol = "◯";
-  const updateScreen = () => {
+
+  function updateScreen() {
     boardDiv.textContent = "";
 
     const board = game.getBoard();
@@ -219,7 +269,7 @@ function GameController(
         boardDiv.appendChild(cellButton);
       });
     });
-  };
+  }
 
   function clickHandlerBoard(e) {
     const selectedRow = e.target.dataset.row;
@@ -231,6 +281,4 @@ function GameController(
     updateScreen();
   }
   boardDiv.addEventListener("click", clickHandlerBoard);
-
-  updateScreen();
 })();
