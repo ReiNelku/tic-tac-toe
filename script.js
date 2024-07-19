@@ -180,7 +180,7 @@ function GameController(
     return gameStartModal;
   };
 
-  const names = [];
+  let names = [];
   let game = null;
 
   const showPlayerNames = () => {
@@ -189,9 +189,13 @@ function GameController(
 
     if (names[0]) {
       playerXNameBox.textContent = `✕: ${names[0]}`;
+    } else {
+      playerXNameBox.textContent = "✕: Player 1";
     }
     if (names[1]) {
       playerONameBox.textContent = `◯: ${names[1]}`;
+    } else {
+      playerONameBox.textContent = "◯: Player 2";
     }
   };
 
@@ -216,6 +220,8 @@ function GameController(
       names[0] = playerXName.value;
       names[1] = playerOName.value;
 
+      playerXName.value = "";
+      playerOName.value = "";
       modal.close();
       startGame();
     }
@@ -281,4 +287,16 @@ function GameController(
     updateScreen();
   }
   boardDiv.addEventListener("click", clickHandlerBoard);
+
+  const restartGameBtn = document.querySelector(".restart-game");
+
+  function clickHandlerGameRestart() {
+    boardDiv.textContent = "";
+
+    names = [];
+
+    showPlayerNames();
+    getPlayerNames();
+  }
+  restartGameBtn.addEventListener("click", clickHandlerGameRestart);
 })();

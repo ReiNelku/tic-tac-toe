@@ -80,7 +80,8 @@ body {
   border-color: var(--o);
 }
 
-.start-game-btn {
+.start-game-btn,
+.restart-game {
   align-self: center;
   padding: 1rem 2rem;
   border: 0;
@@ -118,8 +119,7 @@ main {
 .players {
   margin: 2rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 25rem;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .player {
@@ -136,6 +136,11 @@ main {
 
 .o {
   color: var(--o);
+}
+
+.restart-game {
+  justify-self: center;
+  align-self: center;
 }
 
 .player.x {
