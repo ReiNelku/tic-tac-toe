@@ -155,11 +155,11 @@ function GameController(
 
     if (winner === null) {
       printTie();
-      return;
+      return winner;
     } else if (winner !== undefined) {
       printNewRound();
       printWinner(winner);
-      return;
+      return winner;
     }
 
     round++;
@@ -220,18 +220,18 @@ function GameController(
       names[0] = playerXName.value;
       names[1] = playerOName.value;
 
-      playerXName.value = "";
-      playerOName.value = "";
+      showPlayerNames();
       modal.close();
-      startGame();
     }
     startGameBtn.addEventListener("click", clickHandlerGameStart);
   };
 
-  getPlayerNames();
   const playerXNameBox = document.querySelector(".player.x");
   const playerONameBox = document.querySelector(".player.o");
   const boardDiv = document.querySelector(".board");
+
+  getPlayerNames();
+  startGame();
 
   const xSymbol = "✕";
   const oSymbol = "◯";
@@ -277,26 +277,102 @@ function GameController(
     });
   }
 
+  const displayWinner = (winner) => {
+    showGameEndModal();
+
+    const title = document.querySelector(".winner h2");
+    const text = document.querySelector(".winner p");
+
+    if (winner === null) {
+      title.textContent = "Tie!";
+      text.textContent = "This match was a tie.";
+    } else if (winner.symbol === "X") {
+      title.textContent = "Winner";
+      title.classList.add("x");
+
+      congratulationText = document.createElement("span");
+      congratulationText.textContent = "Congratulations! ";
+
+      const winnerSpan = document.createElement("span");
+      winnerSpan.textContent = `${names[0]} `;
+      winnerSpan.classList.add("x");
+
+      const winnerText = document.createElement("span");
+      winnerText.textContent = "is the Winner!";
+
+      text.appendChild(congratulationText);
+      text.appendChild(winnerSpan);
+      text.appendChild(winnerText);
+    } else if (winner.symbol === "O") {
+      title.textContent = "Winner";
+      title.classList.add("o");
+
+      congratulationText = document.createElement("span");
+      congratulationText.textContent = "Congratulations! ";
+
+      const winnerSpan = document.createElement("span");
+      winnerSpan.textContent = `${names[1]} `;
+      winnerSpan.classList.add("o");
+
+      const winnerText = document.createElement("span");
+      winnerText.textContent = "is the Winner!";
+
+      text.appendChild(congratulationText);
+      text.appendChild(winnerSpan);
+      text.appendChild(winnerText);
+    }
+  };
+
+  const showGameEndModal = () => {
+    const modal = document.querySelector(".end-game");
+    modal.showModal();
+  };
+
+  const closeGameEndModal = () => {
+    const modal = document.querySelector(".end-game");
+
+    const title = document.querySelector(".winner h2");
+    title.textContent = "";
+    const text = document.querySelector(".winner p");
+    text.textContent = "";
+
+    modal.close();
+  };
+
   function clickHandlerBoard(e) {
     const selectedRow = e.target.dataset.row;
     const selectedColumn = e.target.dataset.column;
 
     if (!selectedRow || !selectedColumn) return;
 
-    game.playRound(selectedRow, selectedColumn);
+    const winner = game.playRound(selectedRow, selectedColumn);
+    if (winner !== undefined) {
+      displayWinner(winner);
+      return;
+    }
     updateScreen();
   }
   boardDiv.addEventListener("click", clickHandlerBoard);
 
-  const restartGameBtn = document.querySelector(".restart-game");
-
-  function clickHandlerGameRestart() {
-    boardDiv.textContent = "";
-
+  const nameReset = () => {
     names = [];
 
-    showPlayerNames();
+    const playerXNameBox = document.querySelector(".player.x h2");
+    playerXNameBox.textContent = "✕: Player 1";
+    const playerONameBox = document.querySelector(".player.o h2");
+    playerONameBox.textContent = "◯: Player 2";
+  };
+
+  const restartGameButtons = document.querySelectorAll(".restart-game");
+
+  function clickHandlerGameRestart() {
+    nameReset();
+
+    closeGameEndModal();
     getPlayerNames();
+    startGame();
   }
-  restartGameBtn.addEventListener("click", clickHandlerGameRestart);
+  restartGameButtons.forEach((btn) =>
+    btn.addEventListener("click", clickHandlerGameRestart)
+  );
 })();

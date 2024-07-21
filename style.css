@@ -25,7 +25,12 @@ body {
   flex-direction: column;
 }
 
-.start-game {
+button {
+  cursor: pointer;
+}
+
+.start-game,
+.end-game {
   height: 250px;
   width: 600px;
   padding: 2rem;
@@ -181,4 +186,24 @@ main {
   border: 3px solid var(--board-border-color);
   background-color: var(--background-color);
   cursor: pointer;
+}
+
+.game-results {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.winner h2 {
+  text-align: center;
+  font-size: 3rem;
+  font-family: "Playwrite Cuba";
+  padding-bottom: 1rem;
+}
+
+.winner p {
+  text-align: center;
+  font-size: 1.5rem;
+  font-family: "Times New Roman", Times, serif;
 }
