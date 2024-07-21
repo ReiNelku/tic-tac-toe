@@ -20,15 +20,7 @@ function GameBoard() {
     board[row][column].addSymbol(player);
   };
 
-  const printBoard = () => {
-    const boardWithSymbolValues = board.map((row) =>
-      row.map((square) => square.getSymbol())
-    );
-
-    console.table(boardWithSymbolValues);
-  };
-
-  return { getBoard, selectSquare, printBoard };
+  return { getBoard, selectSquare };
 }
 
 function Player() {
@@ -71,11 +63,6 @@ function GameController(
   };
 
   const getActivePlayer = () => activePlayer;
-
-  const printNewRound = () => {
-    board.printBoard();
-    console.log(`${getActivePlayer().name}'s turn.`);
-  };
 
   let round = 1;
 
@@ -140,34 +127,20 @@ function GameController(
     }
   };
 
-  const printWinner = (winner) => {
-    console.log(`The winner is: ${winner.name}`);
-  };
-
-  const printTie = () => {
-    console.log("This game is a Tie!");
-  };
-
   const playRound = (row, column) => {
     board.selectSquare(row, column, getActivePlayer().symbol);
 
     const winner = checkWinner();
 
     if (winner === null) {
-      printTie();
       return winner;
     } else if (winner !== undefined) {
-      printNewRound();
-      printWinner(winner);
       return winner;
     }
 
     round++;
     switchPlayerTurn();
-    printNewRound();
   };
-
-  printNewRound();
 
   return { playRound, getActivePlayer, getBoard: board.getBoard };
 }
