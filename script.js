@@ -284,10 +284,13 @@ function GameController(
     const text = document.querySelector(".winner p");
 
     if (winner === null) {
+      title.classList.remove("x");
+      title.classList.remove("o");
       title.textContent = "Tie!";
       text.textContent = "This match was a tie.";
     } else if (winner.symbol === "X") {
       title.textContent = "Winner";
+      title.classList.remove("o");
       title.classList.add("x");
 
       congratulationText = document.createElement("span");
@@ -305,6 +308,7 @@ function GameController(
       text.appendChild(winnerText);
     } else if (winner.symbol === "O") {
       title.textContent = "Winner";
+      title.classList.remove("x");
       title.classList.add("o");
 
       congratulationText = document.createElement("span");
@@ -367,7 +371,6 @@ function GameController(
 
   function clickHandlerGameRestart() {
     nameReset();
-
     closeGameEndModal();
     getPlayerNames();
     startGame();
